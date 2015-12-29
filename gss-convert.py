@@ -56,8 +56,8 @@ for line in fptr.readlines():
 		entrance_type = line[69:70].strip()
 		field_indication = line[70:71].strip()
 
-		length = line[77:82].strip()
-		depth = line[83:87].strip()
+		length = line[77:84].strip()
+		depth = line[84:89].strip()
 
 		if record_type == 'E':
 			if accuracy not in ["H","I","J","K","L","M","N","O","P","Q","R","S"]:
