@@ -58,14 +58,23 @@ for line in fptr.readlines():
 		accuracy = line[51:52]
 
 		topo_indicator = line[60:61]
-		elevation = line[61:66].strip()
+		try:
+			elevation = int(line[61:66].strip())
+		except:
+			elevation = -1
 		entry_status = line[66:68].strip()
 		equipment = line[67:69].strip()
 		entrance_type = line[69:70].strip()
 		field_indication = line[70:71].strip()
 
-		length = line[77:84].strip()
-		depth = line[84:89].strip()
+		try:
+			length = line[77:84].strip()
+		except:
+			length = -1
+		try:
+			depth = int(line[84:89].strip())
+		except:
+			depth = -1
 
 		if record_type == 'E':
 			if accuracy not in ["H","I","J","K","L","M","N","O","P","Q","R","S"]:
@@ -91,7 +100,7 @@ for line in fptr.readlines():
 										'submitted': '1990-01-01'
 									}
 								],
-								'elevation': elevation,
+								'elevation': int(elevation),
 								'status': 'UNKNOWN',
 								'ownership': 'UNKNOWN',
 								'type': 'UNKNOWN',
