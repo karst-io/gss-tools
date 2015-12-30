@@ -10,6 +10,14 @@ def throw_warning(logline, warning):
 	logging.warning(logline)
 	logging.warning(warning)
 
+def dms_to_dd(dms):
+	try:
+		hour = float(dms[0:2])
+		minutes = float(dms[2:4])
+		seconds = float(dms[4:6])
+		return (hour + (minutes/60) + (seconds/3600))
+	except ValueError:
+		return False
 
 FORMAT = '%(levelname)s: %(message)s'
 logging.basicConfig(format=FORMAT)
@@ -45,8 +53,8 @@ for line in fptr.readlines():
 		code = line[0:7].replace(" ","")
 		name = line[11:35].strip()
 		record_type = line[7:9].strip()
-		lat = line[37:44]
-		lon = line[44:51]
+		lat = dms_to_dd(line[37:44])
+		lon = dms_to_dd(line[44:51]) * -1 
 		accuracy = line[51:52]
 
 		topo_indicator = line[60:61]
@@ -76,10 +84,11 @@ for line in fptr.readlines():
 									{
 										'id': str(uuid.uuid4()),
 										'system': 'NAD27',
-										'format': 'DMS',
-										'latitude': lat,
-										'longitude': lon,
+										'lat': lat,
+										'lon': lon,
 										'accuracy': accuracy_dict[accuracy],
+										'submitter': 'GSS',
+										'submitted': '1990-01-01'
 									}
 								],
 								'elevation': elevation,
