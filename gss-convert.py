@@ -87,7 +87,9 @@ for line in fptr.readlines():
 
         cave_file_path = "%s/%s.json" % (output_dir, code)
 
-        if record_type == 'E':
+        if record_type == 'E' or record_type == 'X':
+            #e = entrance
+            # x = karst feature
             if accuracy not in ["H","I","J","K","L","M","N","O","P","Q","R","S"]:
                 throw_warning(line, "Accuracy for %s is '%s'" % (code, accuracy))
 
@@ -252,6 +254,9 @@ for line in fptr.readlines():
             fptr = open(cave_file_path,'w')
             fptr.write(json.dumps(cave_obj, indent=4))
             fptr.close()
+        elif record_type == 'R':
+            #retired
+            pass
         else:
             logging.warning(record_type)
 
